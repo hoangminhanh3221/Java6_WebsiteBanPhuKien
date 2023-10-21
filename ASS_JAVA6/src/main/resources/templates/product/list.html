@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<html xmlns:th="http://wwww.thymeleaf.org" th:replace="~{/layout/index::dynamic(~{::main})}">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+   
+  </head>
+  <body >
+    <main class="row" style="margin-top: 18px; margin-left: -10rem">
+		<div th:each="p:${items.content}" class="col-sm-4 mb-3">
+			<div class="card  poly-item ">
+				<div class="card-header mainColor rounded-0">
+					<div class="card-title">[[${p.name}]]</div>
+				</div>
+				<div class="card-body">
+					<a th:href="@{|product/detail/${p.id}|}">
+						<img th:src="@{|/assets/images/${p.image}|}">
+					</a>
+				</div>
+				<div class="card-footer d-flex justify-content-between mainColor2 text-white" >
+					<b class="d-flex align-items-center btn btn-primary btn-sm">$[[${p.price}]]</b>
+					<div class="button-content">
+						<span class="btn btn-success btn-sm" th:text="${#dates.format(p.createDate, 'dd-MM-yyyy')}"></span>
+						<button class="btn btn-danger"
+						th:classappend="${p.available}?'':disabled"
+						th:attr="ng-click=@{|cart.add(${p.id})|}">
+							<i class="fa-solid fa-cart-shopping"></i>
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- Pagination-->
+		<nav aria-label="Page navigation example">
+		  <ul class="pagination justify-content-center">
+		    <li class="page-item" th:classappend="${items.number==0} ? disabled">
+		      <a class="page-link"  th:href="@{|product/list?cid=${cateID}&sortBy=${sort}&page=${items.number-1}|}" aria-label="Previous">
+		        <span aria-hidden="true">&laquo;</span>
+		      </a>
+		    </li>
+		    <th:block th:each="pagenumber:${pageNumbers}">
+		    	<li class="page-item"
+		    	th:classappend="${pagenumber==items.number+1} ? active"		    	
+		    	><a class="page-link" th:href="@{|product/list?cid=${cateID}&sortBy=${sort}&page=${pagenumber-1}|}">[[${pagenumber}]]</a></li>
+		    </th:block>
+
+		    <li class="page-item" th:classappend="${items.number==items.totalPages-1} ? disabled">
+		      <a class="page-link" th:href="@{|product/list?cid=${cateID}&sortBy=${sort}&page=${items.number+1}|}" aria-label="Next">
+		        <span aria-hidden="true">&raquo;</span>
+		      </a>
+		    </li>
+		  </ul>
+		</nav>
+     <!-- Pagination Edge-->
+	</main>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+    
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+    -->
+  </body>
